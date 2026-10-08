@@ -1,5 +1,8 @@
-name: "GIPHY PR comment"
+name: "beTheNoob GIPHY PR comment"
 description: "Add a GIPHY GIF comment to new PULL Requests"
+branding:
+  icon: 'message-square'
+  color: 'yellow'
 
 inputs:
   github-token:
