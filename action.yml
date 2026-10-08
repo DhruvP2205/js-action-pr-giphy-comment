@@ -1,0 +1,14 @@
+name: "GIPHY PR comment"
+description: "Add a GIPHY GIF comment to new PULL Requests"
+
+inputs:
+  github-token:
+    description: "GitHub TOken"
+    required: true
+  giphy-api-key:
+    description: "GIPHY API Key"
+    required: true
+
+runs:
+  using: node24
+  main: dist/index.js
