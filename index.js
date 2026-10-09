@@ -20,14 +20,12 @@ async function run(){
         }
 
         const response = await giphy.random({ tag: 'thank you', rating: 'g' });
-        const gifData = response?.data?.data || response?.data;
-        const images = gifData?.images;
+        const gifData = response?.data;
 
         const gifUrl = 
-            images?.downsized?.url ||
-            images?.downsized_large?.url ||
-            images?.fixed_height?.url ||
-            images?.original?.url;
+            gifData?.image_url ||
+            gifData?.images?.original?.url ||
+            gifData?.images?.downsized?.url;
 
         console.log("Extracted GIF URL:", gifUrl);
 
@@ -46,8 +44,7 @@ async function run(){
         core.setOutput('comment-url', `${gifUrl}`);
         console.log("Giphy GIF comment added successfully! Comment URL:", gifUrl);
     } catch(error){
-        console.error("Error:", error);
-        process.exit(1);
+        core.setFailed(`Action failed with error: ${error.message}`);
     }
 }
 
