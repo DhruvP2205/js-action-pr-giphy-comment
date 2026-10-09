@@ -20,14 +20,16 @@ async function run(){
         }
 
         const prComment = await giphy.random('thank you');
+        const imageData = prComment?.data?.images || prComment?.images;
 
         const gifUrl = 
-            prComment?.data?.images?.downsized?.url ||
-            prComment?.data?.images?.downsized_large?.url ||
-            prComment?.data?.images?.fixed_height?.url ||
-            prComment?.data?.images?.original?.url;
+            imageData?.data?.images?.downsized?.url ||
+            imageData?.data?.images?.downsized_large?.url ||
+            imageData?.data?.images?.fixed_height?.url ||
+            imageData?.data?.images?.original?.url;
 
         if (!gifUrl) {
+            console.error("Giphy API Response Structure:", JSON.stringify(prComment, null, 2));
             core.setFailed("Failed to fetch a valid GIF URL from Giphy API.");
             return;
         }
