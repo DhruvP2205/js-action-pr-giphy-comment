@@ -23,10 +23,10 @@ async function run(){
         const imageData = prComment?.data?.images || prComment?.images;
 
         const gifUrl = 
-            imageData?.data?.images?.downsized?.url ||
-            imageData?.data?.images?.downsized_large?.url ||
-            imageData?.data?.images?.fixed_height?.url ||
-            imageData?.data?.images?.original?.url;
+            imageData?.downsized?.url ||
+            imageData?.downsized_large?.url ||
+            imageData?.fixed_height?.url ||
+            imageData?.original?.url;
 
         if (!gifUrl) {
             console.error("Giphy API Response Structure:", JSON.stringify(prComment, null, 2));
