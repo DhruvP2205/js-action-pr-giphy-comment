@@ -27,13 +27,13 @@ async function run(){
             gifData?.images?.original?.url ||
             gifData?.images?.downsized?.url;
 
-        console.log("Extracted GIF URL:", gifUrl);
-
         if (!gifUrl) {
             core.setFailed("Failed to fetch a valid GIF URL from Giphy API.");
             return;
         }
 
+        console.log("Extracted GIF URL:", gifUrl);
+        
         await octokit.issues.createComment({
             owner,
             repo,

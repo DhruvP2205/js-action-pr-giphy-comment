@@ -39072,21 +39072,21 @@ async function run(){
             return;
         }
 
-        const prComment = await giphy.random('thank you');
-        const imageData = prComment?.data?.images || prComment?.images;
+        const response = await giphy.random({ tag: 'thank you', rating: 'g' });
+        const gifData = response?.data;
 
         const gifUrl = 
-            imageData?.data?.images?.downsized?.url ||
-            imageData?.data?.images?.downsized_large?.url ||
-            imageData?.data?.images?.fixed_height?.url ||
-            imageData?.data?.images?.original?.url;
+            gifData?.image_url ||
+            gifData?.images?.original?.url ||
+            gifData?.images?.downsized?.url;
 
         if (!gifUrl) {
-            console.error("Giphy API Response Structure:", JSON.stringify(prComment, null, 2));
             core.setFailed("Failed to fetch a valid GIF URL from Giphy API.");
             return;
         }
 
+        console.log("Extracted GIF URL:", gifUrl);
+        
         await octokit.issues.createComment({
             owner,
             repo,
@@ -39097,8 +39097,7 @@ async function run(){
         core.setOutput('comment-url', `${gifUrl}`);
         console.log("Giphy GIF comment added successfully! Comment URL:", gifUrl);
     } catch(error){
-        console.error("Error:", error);
-        process.exit(1);
+        core.setFailed(`Action failed with error: ${error.message}`);
     }
 }
 
