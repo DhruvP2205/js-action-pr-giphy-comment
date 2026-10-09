@@ -28,8 +28,9 @@ async function run(){
             imageData?.fixed_height?.url ||
             imageData?.original?.url;
 
+        console.log("Here is the URL:", gifUrl)
+
         if (!gifUrl) {
-            console.error("Giphy API Response Structure:", JSON.stringify(prComment, null, 2));
             core.setFailed("Failed to fetch a valid GIF URL from Giphy API.");
             return;
         }
