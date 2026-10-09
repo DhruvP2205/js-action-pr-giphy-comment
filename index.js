@@ -19,16 +19,17 @@ async function run(){
             return;
         }
 
-        const prComment = await giphy.random('thank you');
-        const imageData = prComment?.data?.images || prComment?.images;
+        const response = await giphy.random({ tag: 'thank you', rating: 'g' });
+        const gifData = response?.data?.data || response?.data;
+        const images = gifData?.images;
 
         const gifUrl = 
-            imageData?.downsized?.url ||
-            imageData?.downsized_large?.url ||
-            imageData?.fixed_height?.url ||
-            imageData?.original?.url;
+            images?.downsized?.url ||
+            images?.downsized_large?.url ||
+            images?.fixed_height?.url ||
+            images?.original?.url;
 
-        console.log("Here is the URL:", gifUrl)
+        console.log("Extracted GIF URL:", gifUrl);
 
         if (!gifUrl) {
             core.setFailed("Failed to fetch a valid GIF URL from Giphy API.");
